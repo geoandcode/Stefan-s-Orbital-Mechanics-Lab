@@ -25,7 +25,7 @@ export const BottomControls: React.FC<BottomControlsProps> = ({
   onSetAnimSpeedMultiplier,
 }) => {
   return (
-    <div className="absolute bottom-5 left-6 right-6 xl:right-8 flex items-center justify-between z-30 pointer-events-none">
+    <div className="absolute bottom-8 left-6 right-6 xl:right-8 flex items-center justify-between z-30 pointer-events-none">
       {/* Interaction Hint (Bottom Left) */}
       <div className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold pointer-events-none hidden xl:block bg-slate-950/70 px-3 py-2 rounded-xl border border-slate-800/70 shadow-lg select-none">
         Drag to rotate · Scroll to zoom · Natural Earth Boundaries Active

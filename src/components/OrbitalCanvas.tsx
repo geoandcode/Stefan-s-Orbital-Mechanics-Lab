@@ -57,6 +57,9 @@ export const OrbitalCanvas: React.FC<OrbitalCanvasProps> = ({
   const orbitColorRef = useRef(orbitColor);
   orbitColorRef.current = orbitColor;
 
+  const activePresetIdRef = useRef(activePresetId);
+  activePresetIdRef.current = activePresetId;
+
   // Internal true anomaly tracker for silky smooth 60 FPS animation
   const currentNuRef = useRef(elements.nu);
 
@@ -211,7 +214,7 @@ export const OrbitalCanvas: React.FC<OrbitalCanvasProps> = ({
     const controls = controlsRef.current;
 
     if (preset === 'isometric') {
-      cam.position.set(13, 7, 14);
+      cam.position.set(15, 8, 16);
       controls.target.set(0, 0, 0);
     } else if (preset === 'polar') {
       cam.position.set(0, 22, 0.01);
@@ -323,10 +326,10 @@ export const OrbitalCanvas: React.FC<OrbitalCanvasProps> = ({
         x: screenX,
         y: screenY,
         visible: satVec.z < 1.0,
-        text: activePresetId,
+        text: activePresetIdRef.current,
       });
     }
-  }, [activePresetId]);
+  }, []);
 
   // Handle camera preset changes
   useEffect(() => {
@@ -342,6 +345,11 @@ export const OrbitalCanvas: React.FC<OrbitalCanvasProps> = ({
     newSat.quaternion.copy(satMeshRef.current.quaternion);
     satMeshRef.current = newSat;
     sceneRef.current.add(newSat);
+  }, [activePresetId]);
+
+  // Sync HUD label text immediately when activePresetId changes
+  useEffect(() => {
+    setHudLabel((prev) => ({ ...prev, text: activePresetId }));
   }, [activePresetId]);
 
   // Synchronize when elements or colors change from outside
@@ -385,7 +393,7 @@ export const OrbitalCanvas: React.FC<OrbitalCanvasProps> = ({
       0.1,
       1000
     );
-    camera.position.set(13, 7, 14);
+    camera.position.set(15, 8, 16);
     cameraRef.current = camera;
 
     // Renderer
@@ -675,7 +683,6 @@ export const OrbitalCanvas: React.FC<OrbitalCanvasProps> = ({
             transform: `translate(${hudLabel.x + 14}px, ${hudLabel.y - 12}px)`,
           }}
         >
-          <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_#38efef]" />
           <span className="text-[11px] font-mono font-bold tracking-wider text-cyan-200 bg-slate-900/85 px-2.5 py-0.5 rounded border border-cyan-500/40 shadow-lg">
             {getFlagLabel(hudLabel.text)}
           </span>
